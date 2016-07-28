@@ -74,6 +74,17 @@ parameters:
     - custom_constraint: rackconnect.network
     immutable: true
   #Advanced Options
+  loadbalancer_flavor:
+    type: string
+    default: 2 GB General Purpose v1
+    label: Server Flavor
+    description: Flavor of Cloud Server to use for Drupal
+    constraints:
+    - allowed_values:
+      - 2 GB General Purpose v1
+      - 4 GB General Purpose v1
+      - 8 GB General Purpose v1
+    immutable: true
   server_flavor:
     type: string
     default: 4 GB General Purpose v1
@@ -307,7 +318,7 @@ resources:
           str_replace:
             template: "http://ipaddr"
             params:
-              ipaddr: { get_attr: [parse_server, accessIPv4] }
+              ipaddr: { get_attr: [load_balancer_public_ip, public_ip_v4] }
       metadata:
         rax-heat: { get_param: "OS::stack_id" }
         stack-name: { get_param: "OS::stack_name" }
@@ -318,7 +329,7 @@ resources:
       - Chicago (ORD)
       - Dallas Fort Worth (DFW)
       - London (LON)
-      target_hostname: { get_attr: [load_balancer, PublicIp] }
+      target_hostname: { get_attr: [load_balancer_public_ip, public_ip_v4] }
       target_receiver: IPv4
   #Cloud Backup
   parse_backup:
