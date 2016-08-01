@@ -97,7 +97,7 @@ instructions: |
 
 user-input-required: true
 description: |
-  #### Production
+  #### Production - RCv3
 
   Parse Server is an open-source version of the Parse backend that can be
   deployed to any infrastructure that can run Node.js.  This stack requires an
